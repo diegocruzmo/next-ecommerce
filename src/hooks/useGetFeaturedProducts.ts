@@ -7,7 +7,7 @@ interface UseProductsResponse {
   products: Product[];
   pagination: Pagination;
 }
-function useProducts() {
+function useGetFeaturedProducts() {
   const { data, status, error }: UseQueryResult<UseProductsResponse, Error> =
     useQuery({
       queryKey: ["products"],
@@ -20,4 +20,4 @@ function useProducts() {
   return { status, error, products, pagination };
 }
 
-export default useProducts;
+export default useGetFeaturedProducts;
