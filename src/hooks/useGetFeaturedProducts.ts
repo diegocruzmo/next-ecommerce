@@ -8,7 +8,7 @@ interface UseProductsResponse {
   pagination: Pagination;
 }
 function useGetFeaturedProducts() {
-  const { data, status, error }: UseQueryResult<UseProductsResponse, Error> =
+  const { data, isPending, error }: UseQueryResult<UseProductsResponse, Error> =
     useQuery({
       queryKey: ["products"],
       queryFn: infoProducts,
@@ -17,7 +17,7 @@ function useGetFeaturedProducts() {
   const products = data?.products ?? [];
   const pagination = data?.pagination ?? null;
 
-  return { status, error, products, pagination };
+  return { isPending, error, products, pagination };
 }
 
 export default useGetFeaturedProducts;
