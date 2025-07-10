@@ -16,7 +16,7 @@ export const SkeletonSchema = (props: SkeletonSchemaProps) => {
           <Skeleton className="h-4 w-[250px]" />
         </div>
       ))}
-      ;
+
       <div className="flex flex-col sm:hidden gap-2">
         <Skeleton className="h-[125px] w-3xl" />
         <Skeleton className="h-6 w-3xl" />

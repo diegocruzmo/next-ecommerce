@@ -1,12 +1,12 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { infoProducts } from "@/services/products";
+import { infoCategoryProducts } from "@/services/categoryproducts";
 import { InfoProducts } from "@/types/Products";
 
-function useGetFeaturedProducts() {
+export default function useGetCategoryProducts(slug: string | string[]) {
   const { data, isPending, error }: UseQueryResult<InfoProducts, Error> =
     useQuery({
-      queryKey: ["products"],
-      queryFn: infoProducts,
+      queryKey: ["categoryproducts"],
+      queryFn: () => infoCategoryProducts(slug),
     });
 
   const products = data?.products ?? [];
@@ -14,5 +14,3 @@ function useGetFeaturedProducts() {
 
   return { isPending, error, products, pagination };
 }
-
-export default useGetFeaturedProducts;

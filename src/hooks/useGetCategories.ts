@@ -1,21 +1,13 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { infoCategories } from "@/services/categories";
+import { InfoCategories } from "@/types/Categories";
 
-import type { Category, Pagination } from "@/types/Categories";
-
-interface UseCategoriesResponse {
-  categories: Category[];
-  pagination: Pagination;
-}
 function useGetCategories() {
-  const {
-    data,
-    isPending,
-    error,
-  }: UseQueryResult<UseCategoriesResponse, Error> = useQuery({
-    queryKey: ["categories"],
-    queryFn: infoCategories,
-  });
+  const { data, isPending, error }: UseQueryResult<InfoCategories, Error> =
+    useQuery({
+      queryKey: ["categories"],
+      queryFn: infoCategories,
+    });
 
   const categories = data?.categories ?? [];
   const pagination = data?.pagination ?? null;
