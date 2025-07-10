@@ -1,4 +1,4 @@
-import { BannerDiscount } from "@/components/shared/banner";
+import { BannerDiscount, BannerProduct } from "@/components/shared/banner";
 import { CarouselHeader } from "@/components/shared/carousel";
 import { ChooseCategory } from "@/components/shared/category";
 import { Featured } from "@/components/shared/featured";
@@ -10,6 +10,7 @@ export default function Home() {
       <Featured />
       <BannerDiscount />
       <ChooseCategory />
+      <BannerProduct />
     </main>
   );
 }
