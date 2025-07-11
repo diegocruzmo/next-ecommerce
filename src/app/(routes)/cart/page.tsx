@@ -5,10 +5,30 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/hooks/useCart";
 import { formatPrice } from "@/lib/formatPrice";
 import { CartItem } from "./components";
+import { loadStripe } from "@stripe/stripe-js";
+import { makePaymentRequest } from "@/services/payment";
 
 export default function Page() {
   const { items } = useCart();
   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  );
+
+  const buyStripe = async () => {
+    try {
+      const stripe = await stripePromise;
+      const res = await makePaymentRequest.post("/api/orders", {
+        products: items,
+      });
+
+      await stripe?.redirectToCheckout({
+        sessionId: res.data.stripeSession.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -36,7 +56,7 @@ export default function Page() {
               <Button
                 variant={"secondary"}
                 className="w-full"
-                onClick={() => console.log("Buying...")}
+                onClick={buyStripe}
               >
                 Buy
               </Button>
