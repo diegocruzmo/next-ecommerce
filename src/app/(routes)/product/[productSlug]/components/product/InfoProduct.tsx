@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useCart } from "@/hooks/useCart";
+import { useWishList } from "@/hooks/useWishList";
 import { formatPrice } from "@/lib/formatPrice";
 import { Product } from "@/types/Products";
 import { Heart } from "lucide-react";
@@ -13,12 +15,13 @@ interface InfoProductProps {
 
 export const InfoProduct = (props: InfoProductProps) => {
   const { product } = props;
-
   const [liked, setLiked] = useState(false);
+  const { addItem } = useCart();
+  const { addItem: addItemWishList } = useWishList();
 
-  const toggleLike = () => {
+  const toggleLike = (product: Product) => {
     setLiked(!liked);
-    console.log("Adding to wishlist...");
+    addItemWishList(product);
   };
 
   return (
@@ -41,7 +44,7 @@ export const InfoProduct = (props: InfoProductProps) => {
         {formatPrice(product.price)}
       </p>
       <div className="flex items-center gap-5">
-        <Button className="w-[80%]" onClick={() => console.log("Buying...")}>
+        <Button className="w-[80%]" onClick={() => addItem(product)}>
           Buy
         </Button>
         <Heart
@@ -51,7 +54,7 @@ export const InfoProduct = (props: InfoProductProps) => {
             liked ? "fill-black dark:fill-slate-400" : "fill-none"
           } 
         hover:fill-black dark:hover:fill-slate-400`}
-          onClick={toggleLike}
+          onClick={() => toggleLike(product)}
         />
       </div>
     </div>

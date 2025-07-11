@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import {
   Carousel,
   CarouselContent,
@@ -10,14 +12,15 @@ import {
 } from "@/components/ui/carousel";
 import { SkeletonSchema } from "../skeleton";
 import { Card, CardContent } from "@/components/ui/card";
+import { IconButton } from "../icon";
 import { Expand, ShoppingCart } from "lucide-react";
 
 import useGetFeaturedProducts from "@/hooks/useGetFeaturedProducts";
-import { IconButton } from "../icon";
-import { useRouter } from "next/navigation";
+import { useCart } from "@/hooks/useCart";
 
 export const Featured = () => {
   const { products, isPending } = useGetFeaturedProducts();
+  const { addItem } = useCart();
   const router = useRouter();
 
   return (
@@ -53,7 +56,7 @@ export const Featured = () => {
                           className="text-slate-100"
                         />
                         <IconButton
-                          onClick={() => router.push(`#`)}
+                          onClick={() => addItem(product)}
                           icon={<ShoppingCart size={16} />}
                           className="text-slate-100"
                         />
